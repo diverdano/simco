@@ -16,12 +16,13 @@ The purpose is to demonstrate capability for basic functionality for the investm
 
 # Setup
 for this project I am using
-* python 3.5 - backend code
-* sqlite3 - database
-* sqlalchemy - object/relational map, schema design 
-* flask/tornado - basic webserver/html templates
-* bootstrap - basic web widgets/UI components
-* aws/ec2 - server instance/env
+
+* python 3.5	backend code
+* sqlite3		database
+* sqlalchemy	object/relational map, schema design 
+* flask/tornado	basic webserver/html templates
+* bootstrap		basic web widgets/UI components
+* aws/ec2		server instance/env
 
 
 * Summary of set up
