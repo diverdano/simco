@@ -20,6 +20,7 @@ class Asset(Base):
 class Allocation(Base):
     __tablename__   = 'allocation'
     id              = Column(Integer, primary_key = True)
+    date_mod        = Column(String(28), nullable = False)
     portfolio       = Column(String(10), nullable = False)          # use a string name for portfolio
     asset_id        = Column(Integer, ForeignKey('asset.id'))
     asset           = relationship(Asset)
@@ -29,4 +30,4 @@ class Allocation(Base):
 
 ## insert at end of file ##
 engine = create_engine('sqlite:///simco.db')
-Base.metadata.create_all(engine)
+#Base.metadata.create_all(engine)        # suppress this if creating DB via SQL script?
