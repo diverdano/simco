@@ -1,24 +1,24 @@
-<html>
-<head>
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-  <div class = 'company'>
-    <h1>SIMCO</h1>
-    <h2>Secret Investment Management Company</h2>
-    <div class = 'pane'>
-      <h3>Allocations</h3>
-      <a href="{{url_for('newAllocation')}}" ><h4>Create a New Allocation</h4></a>
-      {% for allocation in allocations %}
-        <p>
-          <a href = "{{url_for('showAllocations', allocation_id = allocation.id)}}">{{allocation.date_mod}}</a>
-          <a href = "{{url_for('showAllocations', allocation_id = allocation.id)}}">{{'{:.2%}'.format(allocation.allocation)}}&nbsp{{allocation.asset.symbol}}</a>
-          <a href = "{{url_for('showAllocations', allocation_id = allocation.id)}}">{{allocation.asset.symbol}}</a>
-          <a href = "{{url_for('editAllocation',allocation_id = allocation.id)}}">edit</a>
-          <a href = "{{url_for('deleteAllocation',allocation_id = allocation.id)}}">delete</a>
-        </p>
-      {% endfor %}
-    </div>
-  </div>
-</body>
-</html>
+{% include 'header.html' %}
+<div class = 'pane'>
+  <table>
+    <caption>Allocations</caption>
+    <tr>
+      <th>date modified</th>
+      <th>portfolio</th>
+      <th>allocation</th>
+      <th>symbol</th>
+      <th>description</th>
+    </tr>
+  {% for allocation in allocations %}
+    <tr>
+      <td style = "text-align: center">{{util.displayTime(allocation.date_mod)}}</td>
+      <td style = "text-align: center">{{allocation.portfolio}}</td>
+      <td style = "text-align: right">{{'{:.2%}'.format(allocation.allocation)}}</td>
+      <td><a href = "{{url_for('editAllocation', allocation_id = allocation.id)}}">{{allocation.asset.symbol}}</a></td>
+      <td>{{allocation.asset.description}}</td>
+    </tr>
+  {% endfor %}
+  </table>
+  <a href="{{url_for('newAllocation')}}">Create a New Allocation</a>
+</div>
+{% include 'footer.html' %}

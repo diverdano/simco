@@ -1,0 +1,36 @@
+{% include 'header.html' %}
+<div class = 'pane'>
+  <h3>Edit Asset</h3>
+  <form action="{{ url_for('editAsset',asset_id = asset.id)}}" method = 'post'>
+      <p>Asset Details:</p>
+      <input type ='text' size='25' name ='symbol' value = '{{asset.symbol}}'>
+      <select name ='type' id = 'id_type'>
+      {% for type in sec_types %}
+        {% if asset.type == type %}
+          <option value="{{type}}" selected>{{type}}</option>
+        {% else %}
+          <option value="{{type}}">{{type}}</option>
+        {% endif %}
+      {% endfor %}
+      </select>
+      <select name ='exchange'>
+      {% for exchange in exchanges %}
+        {% if asset.exchange == exchange %}
+          <option value="{{exchange}}" selected>{{exchange}}</option>
+        {% else %}
+          <option value="{{exchange}}">{{exchange}}</option>
+        {% endif %}
+      {% endfor %}
+      </select>
+      <input type ='text' size='25' name = 'description' value = '{{asset.description}}'>
+      <input type ='text' size='7' name = 'size' value = '{{asset.size}}'>
+      <input type ='text' size='7' name = 'strike' value = '{{asset.strike}}' id = 'id_strike'>
+      <input type ='text' size='7' name = 'coupon' value = '{{asset.coupon}}' id = 'id_coupon'>
+      <input type ='text' size='7' name = 'expiry' value = '{{asset.expiry}}' id = 'id_expiry'>
+      <input type ='submit' value='Save'>
+      <a href = '{{url_for('showAssets')}}'> Cancel </a>
+  </form>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="{{ url_for('static', filename ='dyntype.js') }}"></script>
+{% include 'footer.html' %}

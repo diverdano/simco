@@ -1,0 +1,18 @@
+{% include 'header.html' %}
+<div class = 'pane'>
+  <h3>New Allocation</h3>
+  <form action="/allocations/new/" method = 'post'>
+      <p>Allocation Details:</p>
+      <input type ='text' size='25' name = 'date_mod' placeholder = 'date' required aria-describedby="datetime" pattern = "[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}:[0-9]{2}Z)?">
+      <input type ='text' size='7' name = 'portfolio' placeholder = 'portfolio' pattern = "[A-Za-z-0-9]+" required aria-describedby="portfolio" title = "portfolio name">
+      <input type ='text' size='7' name = 'allocation' placeholder = 'allocation' required aria-required = "true" pattern="([0-9]+)?(\.[0-9]+)" title = "e.g. allocation = 0.15 = 15%">
+      <select name ='symbol' required>
+      {% for asset in assets %}
+        <option value="{{asset.symbol}}">{{asset.symbol}}</option>
+      {% endfor %}
+      </select>
+      <input type ='submit' value ='Create'>
+      <a href = '{{url_for('showAllocations')}}'> Cancel </a>
+  </form>
+</div>
+{% include 'footer.html' %}

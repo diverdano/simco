@@ -18,11 +18,14 @@ CREATE TABLE asset (
 	description VARCHAR(25) NOT NULL,
 	exchange VARCHAR(10) NOT NULL,
 	size INTEGER,
+  coupon FLOAT,
+  expiry VARCHAR(25),
+  strike INTEGER,
 	PRIMARY KEY (id)
 );
 CREATE TABLE allocation (
 	id INTEGER NOT NULL,
-  date_mod VARCHAR(28) NOT NULL,
+  date_mod VARCHAR(25) NOT NULL,
 	portfolio VARCHAR(10) NOT NULL,
 	asset_id INTEGER,
 	allocation FLOAT NOT NULL,
@@ -30,13 +33,29 @@ CREATE TABLE allocation (
 	FOREIGN KEY(asset_id) REFERENCES asset (id)
 );
 
-INSERT INTO asset Values (0, "equity", "AMZN", "Amazon", "NASDAQ", 1);
-INSERT INTO asset Values (1, "equity", "GOOG", "Alphabet", "NASDAQ", 1);
-INSERT INTO asset Values (2, "future", "VIX", "CBOE Volatility Index", "CBOE", 1000);
-INSERT INTO asset Values (3, "future", "ES", "S&P500 e-mini", "CME", 50);
-INSERT INTO asset Values (4, "option", "AMZN 171215C01170000", "Amazon.com, Inc. Dec 15 2017 1170 Call", "CBO", 100);
+INSERT INTO asset (type, symbol, description, exchange, size) Values
+  ("equity", "AMZN", "Amazon.com, Inc.", "NASDAQ", 1),
+  ("equity", "GOOG", "Alphabet, Inc.", "NASDAQ", 1),
+  ("future", "VIX", "CBOE Volatility Index", "CBOE", 1000),
+  ("future", "ES", "S&P500 e-mini", "CME", 50),
+  ("option", "AMZN 171215C01170000", "Amazon.com, Inc. Dec 15 2017 1170 Call", "CBO", 100),
+  ("equity", "AAPL", "Apple, Inc.", "NASDAQ", 1),
+  ("equity", "IBM", "International Business Machines, Inc.", "NYSE", 1),
+  ("bond", "912828U57", "US Treasury Note 2.125 30nov2023 7Y", "OTC", 1000);
 
-INSERT INTO allocation Values (0, "2017-06-01T23:00:00.00Z", "port1", 0, 0.05);
-INSERT INTO allocation Values (1, "2017-06-01T23:00:00.00Z", "port1", 1, 0.10);
-INSERT INTO allocation Values (2, "2017-06-01T23:00:00.00Z", "port1", 2, 0.12);
-INSERT INTO allocation Values (3, "2017-06-01T23:00:00.00Z", "port1", 3, 0.08);
+INSERT INTO allocation (date_mod, portfolio, asset_id, allocation) Values
+  ("2017-06-01T23:00:00Z", "port1", 1, 0.05),
+  ("2017-06-01T23:00:00Z", "port1", 2, 0.10),
+  ("2017-06-01T23:00:00Z", "port1", 3, 0.12),
+  ("2017-06-01T23:00:00Z", "port1", 4, 0.08),
+  ("2017-06-01T23:00:00Z", "port1", 5, 0.28),
+  ("2017-08-01T23:00:00Z", "port1", 1, 0.10),
+  ("2017-08-01T23:00:00Z", "port1", 2, 0.12),
+  ("2017-08-01T23:00:00Z", "port1", 3, 0.14),
+  ("2017-08-01T23:00:00Z", "port1", 4, 0.16),
+  ("2017-08-01T23:00:00Z", "port1", 5, 0.30),
+  ("2017-10-01T23:00:00Z", "port1", 1, 0.15),
+  ("2017-10-01T23:00:00Z", "port1", 2, 0.08),
+  ("2017-10-01T23:00:00Z", "port1", 3, 0.13),
+  ("2017-10-01T23:00:00Z", "port1", 4, 0.21),
+  ("2017-10-01T23:00:00Z", "port1", 5, 0.35);

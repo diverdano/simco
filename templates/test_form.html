@@ -1,0 +1,45 @@
+{% include 'header.html' %}
+<div class = "articles">
+    <form method="GET" action=_output.html>
+        <table align="center">
+<tr>
+  <th>
+    <label for="id_application_method">Application method:</label>
+  </th>
+  <td>
+    <select  name="application_method" id="id_application_method">
+      <option value="">Pick first</option>
+      <option value="A">Aerial</option>
+      <option value="B">Ground</option>
+    </select>
+  </td>
+</tr>
+
+<tr>
+  <th>
+    <label for="id_A">Aerial Size Dist:</label>
+  </th>
+  <td>
+    <select name="aerial_size_dist" id="id_A">
+      <option value="A1" selected="selected">A1</option>
+      <option value="A2">A2</option>
+    </select>
+  </td>
+</tr>
+<tr>
+  <th>
+    <label for="id_B">Ground spray type:</label>
+  </th>
+  <td>
+    <select name="ground_spray_type" id="id_B">
+      <option value="B1" selected="selected">B1</option>
+      <option value="B2">B2</option>
+    </select>
+  </td>
+</tr>
+</table>
+</form>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="{{ url_for('static', filename ='dynform.js') }}"></script>
+{% include 'footer.html' %}

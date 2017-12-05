@@ -1,22 +1,24 @@
-<html>
-<head>
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-  <div class = 'company'>
-    <h1>SIMCO</h1>
-    <h2>Secret Investment Management Company</h2>
-    <div class = 'pane'>
-      <h3>Assets</h3>
-      <a href="{{url_for('newAsset')}}" ><h4>Create a New Asset</h4></a>
-      {% for asset in assets %}
-        <p>
-          <a href = "{{url_for('showAssets', asset_id = asset.id)}}">{{asset.exchange}}&nbsp{{asset.symbol}}&nbsp{{asset.description}}&nbsp{{asset.size}}</a>
-          <a href = "{{url_for('editAsset', asset_id = asset.id)}}">edit</a>
-          <a href = "{{url_for('deleteAsset', asset_id = asset.id)}}">delete</a>
-        </p>
-      {% endfor %}
-    </div>
-  </div>
-</body>
-</html>
+{% include 'header.html' %}
+<div class = 'pane'>
+  <table>
+    <caption>Assets</caption>
+    <tr>
+      <th>symbol</th>
+      <th>description</th>
+      <th>exchange</th>
+      <th>type</th>
+      <th>contract size</th>
+    </tr>
+  {% for asset in assets %}
+    <tr>
+      <td><a href = "{{url_for('editAsset', asset_id = asset.id)}}">{{asset.symbol}}</a></td>
+      <td>{{asset.description}}</td>
+      <td style = "text-align: center">{{asset.exchange}}</td>
+      <td style = "text-align: center">{{asset.type}}</td>
+      <td style = "text-align: right">{{asset.size}}</td>
+    </tr>
+  {% endfor %}
+</table>
+<a href="{{url_for('newAsset')}}">Create a New Asset</a>
+</div>
+{% include 'footer.html' %}

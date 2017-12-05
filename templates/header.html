@@ -1,0 +1,15 @@
+<html>
+<head>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class = 'company'>
+    <h1>SIMCO</h1>
+    <h2>Secret Investment Management Company</h2>
+  </div>
+  <div class = 'menu'>
+    <ul>
+      <li><a href = "{{url_for('showAllocations')}}">allocations</a></li>
+      <li><a href = "{{url_for('showAssets')}}">assets</a></li>
+    </ul>
+  </div>

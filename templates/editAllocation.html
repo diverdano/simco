@@ -1,0 +1,26 @@
+{% include 'header.html' %}
+<div class = "pane">
+  <h3>Edit Allocation</h3>
+  {{allocation.date_mod}}&nbsp
+  {{allocation.asset_id}}&nbsp
+  {{allocation.portfolio}}&nbsp
+  {{allocation.allocation}}
+  <form action="{{ url_for('editAllocation', allocation_id = allocation.id)}}" method = "post">
+      <p>Allocation Details:</p>
+      <input type = "text" size ="25" name = "date_mod" value = "{{allocation.date_mod}}" required aria-describedby = "datetime" pattern = "[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}:[0-9]{2}Z)?">
+      <input type = "text" size ="7" name = "portfolio" value = "{{allocation.portfolio}}" pattern = "[A-Za-z-0-9]+" required aria-describedby="portfolio" title = "portfolio name">
+      <input type = "text" size = "7" name = "allocation" value = "{{allocation.allocation}}" required aria-required = "true" pattern="([0-9]+)?(\.[0-9]+)" title = "e.g. allocation = 0.15 = 15%">
+      <select name ="asset_id" required>
+        {% for asset in assets %}
+          {% if asset.id == allocation.asset_id %}
+            <option value ="{{asset.id}}" selected>{{asset.symbol}}</option>
+          {% else %}
+            <option value ="{{asset.id}}">{{asset.symbol}}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+      <input type = "submit" value ="Save">
+      <a href = "{{url_for('showAllocations')}}"> Cancel </a>
+  </form>
+</div>
+{% include 'footer.html' %}

@@ -1,21 +1,23 @@
-a:link            { color: blue;}
-a:visited         { color: DodgerBlue;}
-a:hover           { color: hotpink;}
-a:active          { color: blue;}
-body            { font-family: sans-serif; background-color: #ffffff; }
-h1, h2, h3, h4  { font-family: 'Georgia', serif; margin: 0; }
-h1              { border-bottom: 2px solid #eee; font-size: 48; color: White;}
-h2              { font-size: 24; color: LightGrey;}
-h3              { border-bottom: 2px solid #eee; font-size: 30; color: CornFlowerBlue; }
-h4              { font-size: 16; color: FloralWhite;}
-p               { color: #CCCCCC; font-size: 12pt}
-a               { text-decoration: none; color:#FFFFCC; font-size: 12pt;}
-.company        { position:relative; left: 5px; padding: 10px; margin: 0px; background-color: DarkBlue; }
-.pane           { position:relative; border: 1px solid;
-    border-radius: 5px; padding: 10px; margin: 20px; border-color: #999999; background-color: LightGrey; }
-.header         { left:50%; text-align: center;}
-.name           { width:50%;display: inline-block; float: left;}
-.description    { }
-.price          { text-align: right; width:50%; float: right; }
-.editdeletepane { }
-.flash          { background: #cee5F5; }
+a:hover         { color: HotPink;}
+body            { font-size: 12pt; font-family: sans-serif; background-color: White; }
+h1, h2, h3      { font-family: 'Georgia', serif; margin: 0; }
+h1              { font-size: 40pt; color: White; border-bottom: 2px solid #eee; }
+h2              { font-size: 20pt; color: LightGrey; }
+h3              { font-size: 20pt; color: DarkBlue; }
+p               { font-size: 12pt; color: Black; margin: 5; }
+a               { font-size: 12pt; text-decoration: none; }
+input           { font-size: 12pt; text-decoration: none; }
+select          { font-size: 12pt; text-decoration: none; }
+::placeholder   { color: LightGrey }
+li              { display: inline; padding: 10px 30px; }
+table           { width: 100%; background-color: DarkGrey; border-color: White; border-collapse: collapse;}
+table caption   { border: 1px solid #ddd; padding: 3px; font-size: 16pt; color: White; background-color: DarkGrey; }
+table tr:nth-child(even)  { background-color: #eee; }
+table tr:nth-child(odd)   { background-color: #fff; }
+table tr:hover  { background-color: LightSteelBlue; }
+table td, th    { border: 1px solid #ddd; padding: 3px; }
+table th        { color: White; background-color: DarkGrey; }
+.company        { position:relative; padding: 10px; margin: 0px; background-color: DarkBlue; }
+.menu           { position:relative; padding: 10px; margin: 0px; background-color: LightSteelBlue; text-align: right; text-transform: uppercase; }
+.pane           { position:relative; padding: 10px; margin: 0px; background-color: LightSteelBlue; }
+.footer         { position:relative; padding: 10px; margin: 0px; background-color: DarkBlue; color: LightGrey; }
