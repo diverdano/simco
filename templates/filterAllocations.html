@@ -1,0 +1,26 @@
+{% include 'header.html' %}
+<div class = 'pane'>
+  <h3>Filter Allocations</h3>
+  <form action="{{url_for('curAllocations')}}" method = 'get'>
+    <fieldset>
+      <p>
+        <label for ='start_date'>start date</label>
+        <input type ='text' size='12' name = 'start_date' placeholder="yyyy-mm-dd" required aria-describedby = "yyyy-mm-dd" pattern = "[0-9]{4}-[0-9]{2}-[0-9]{2}">
+      </p>
+      <p>
+        <label for ='days'>number of days</label>
+        <input type ='text' size='6' name = 'days' placeholder="integer" required aria-describedby="d" pattern="[0-9]+" title = "number of days from start date">
+      </p>
+      <p>
+        <label for ='mean'>calculate mean</label>
+        <select name ='mean'>
+          <option value="True">True</option>
+          <option value="False">False</option>
+        </select>
+      </p>
+      <input type ='submit' value ='Apply'>
+      <a href = '{{url_for('showAllocations')}}'> Cancel </a>
+    </fieldset>
+  </form>
+</div>
+{% include 'footer.html' %}

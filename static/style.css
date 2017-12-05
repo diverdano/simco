@@ -6,6 +6,7 @@ h2              { font-size: 20pt; color: LightGrey; }
 h3              { font-size: 20pt; color: DarkBlue; }
 p               { font-size: 12pt; color: Black; margin: 5; }
 a               { font-size: 12pt; text-decoration: none; }
+fieldset        { font-size: 12pt; text-decoration: none; background-color: LightGrey; border: 1px solid #ddd; border-color: Blue; }
 input           { font-size: 12pt; text-decoration: none; }
 select          { font-size: 12pt; text-decoration: none; }
 ::placeholder   { color: LightGrey }

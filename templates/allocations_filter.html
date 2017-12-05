@@ -1,0 +1,38 @@
+{% include 'header.html' %}
+<div class = 'pane'>
+  <table>
+    <caption>Filtered Allocations</caption>
+    {% if mean == False %}
+    <tr>
+      <th>date modified</th>
+      <th>allocation</th>
+      <th>symbol</th>
+    </tr>
+    {% for allocation in allocations %}
+    <tr>
+      <td style = "text-align: center">{{util.displayTime(allocation.date_mod)}}</td>
+      <td style = "text-align: right">{{'{:.2%}'.format(allocation.allocation)}}</td>
+      <td style = "text-align: left">{{allocation.symbol}}</td>
+    </tr>
+    {% endfor %}
+  {% endif %}
+  {% if mean == True %}
+  <tr>
+    <th>ave allocation</th>
+    <th>symbol</th>
+  </tr>
+    {% for allocation in allocations %}
+    <tr>
+      <td style = "text-align: right">{{'{:.2%}'.format(allocation.ave_allocation)}}</td>
+      <td style = "text-align: left">{{allocation.symbol}}</td>
+    </tr>
+    {% endfor %}
+  {% endif %}
+  </table>
+  <p>filter applied:</p>
+  <p>start date = {{start_date}}</p>
+  <p>days = {{days}}</p>
+  <p>mean calculated: {{mean}}</p>
+  <p><a href="{{url_for('setFilter')}}">Filter Allocations</a></p>
+</div>
+{% include 'footer.html' %}

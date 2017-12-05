@@ -9,6 +9,7 @@ import cgi
 import sys
 import os                                                   # used to obtain environment host name & process web file paths
 import argparse                                             # used when running as script; should be moved to DAO
+from distutils.util import strtobool as s2b                 # python bool doesn't convert strings to bool (e.g.: bool('False') == True)
 
 ## === 3rd party ===
 from flask import Flask, request, render_template, url_for, redirect, jsonify
@@ -76,7 +77,7 @@ def getDF(start_date=None, days=None, mean=False):
         result = allocationsDF[(allocationsDF.date_mod > start_date) & (allocationsDF.date_mod < end_date)]
     if mean == True:
         result = result.groupby(['symbol']).mean().to_dict().values()
-        return [{'symbol':k, 'ave_alloc':v} for k,v in list(result)[0].items()]
+        return [{'symbol':k, 'ave_allocation':v} for k,v in list(result)[0].items()]
         #newdict = list(result.groupby(['symbol']).mean().to_dict().values())[0]
     else:
         result = result.to_dict('records')
@@ -101,11 +102,26 @@ def showAssets():
     '''show Assets'''
     return render_template('assets.html', assets = assets)
 
-@app.route('/listAllocations')
+@app.route('/filter_allocations/', methods = ['GET', 'POST'])
 def curAllocations():
-    '''do join to get current allocations by symbol'''
-    result = getDF(start_date, days, mean)
-    return jsonify(result)
+    '''apply date filters and calculate mean if requested'''
+    start_date              = request.args.get('start_date')
+    days                    = int(request.args.get('days', 0))
+    mean                    = bool(s2b(request.args.get('mean')))
+    filtered_allocations    = getDF(start_date, days, mean)
+    return render_template('allocations_filter.html', allocations = filtered_allocations, mean=mean, start_date=start_date, days=days)
+
+@app.route('/set_filter/', methods = ['GET', 'POST'])
+def setFilter():
+    '''set filter and allow calculation of average allocation per symbol'''
+    if request.method == 'POST':
+        start_date              = request.form['start_date']
+        days                    = request.form['days']
+        mean                    = request.form['mean']
+        filtered_allocations    = getDF(start_date, days, mean)
+        return redirect(url_for('curAllocations'), data=dict(allocations = filtered_allocations, mean=mean, start_date=start_date, days=days))
+    else:
+        return render_template('filterAllocations.html')
 
 @app.route('/allocations/', methods = ['GET', 'POST'])
 def showAllocations():
@@ -192,42 +208,7 @@ def editAllocation(allocation_id):
         return render_template('editAllocation.html', allocation = allocations.filter_by(id = allocation_id).one(), assets = assets)
 
 
-# === old stuff ===
-
-@app.route('/restaurants/<int:restaurant_id>/')
-def showMenu(restaurant_id):
-    '''show restaurant menu'''
-    restaurant = rest.filter_by(id = restaurant_id).one()
-    rest_items = mi.filter_by(restaurant_id = restaurant.id)
-    return render_template('menu.html', restaurant=restaurant, items=rest_items)
-
-@app.route('/restaurants/new/', methods=['GET', 'POST'])
-def newRestaurant():
-    '''add new restaurant'''
-    if request.method == 'POST':
-        restaurant = Restaurant(name=request.form['name'])
-#        newRestaurant = Restaurant(name=request.form['name'][0].decode('ascii'))
-        logger.debug('adding new restaurant', restaurant.name)
-        session.add(restaurant)
-        session.commit()
-        return redirect(url_for('showRestaurants'))
-    else:
-        return render_template('newRestaurant.html')
-    return "page to create a new restaurant"
-
-@app.route('/restaurants/<int:restaurant_id>/edit/', methods=['GET', 'POST'])
-def editRestaurant(restaurant_id):
-    '''edit restaurant'''
-    if request.method == 'POST':
-        restaurant = rest.filter_by(id = restaurant_id).one()
-        restaurant.name = request.form['name']
-        logger.debug('updating restaurant', restaurant.name)
-        session.add(restaurant)
-        session.commit()
-        return redirect(url_for('showRestaurants'))
-    else:
-        return render_template('editRestaurant.html', restaurant=rest.filter_by(id=restaurant_id).one())
-    return "page to edit restaurant"
+## == old stuff
 
 @app.route('/restaurants/<int:restaurant_id>/delete/', methods=['GET', 'POST'])
 def deleteRestaurant(restaurant_id):
@@ -241,34 +222,6 @@ def deleteRestaurant(restaurant_id):
     else:
         return render_template('deleteRestaurant.html', restaurant=rest.filter_by(id=restaurant_id).one())
     return "page to delete restaurant"
-
-# Task 1: Create route for newMenuItem function here
-@app.route('/restaurants/<int:restaurant_id>/new/', methods=['GET', 'POST'])
-def newMenuItem(restaurant_id):
-    '''add new menu items'''
-    if request.method == 'POST':
-        menuitem = MenuItem(name=request.form['name'], price=request.form['price'], desc=request.form['desc'])
-#        newRestaurant = Restaurant(name=request.form['name'][0].decode('ascii'))
-        logger.debug('adding new menu item', menuitem.name)
-        session.add(menuitem)
-        session.commit()
-#        return redirect(url_for('showRestaurants'))
-        return redirect(url_for('showMenu') + '/' + restaurant_id)
-    else:
-        return render_template('newmenuitem.html')
-    return "page to create a new menu item. Task 1 complete!"
-
-# Task 2: Create route for editMenuItem function here
-@app.route('/restaurants/<int:restaurant_id>/<int:menu_id>/edit/', methods=['GET', 'POST'])
-def editMenuItem(restaurant_id, menu_id):
-    '''edit menu items'''
-    return "page to edit a menu item. Task 2 complete!"
-
-# Task 3: Create a route for deleteMenuItem function here
-@app.route('/restaurants/<int:restaurant_id>/<int:menu_id>/delete/', methods=['GET', 'POST'])
-def deleteMenuItem(restaurant_id, menu_id):
-    '''delete menu items'''
-    return "page to delete a menu item. Task 3 complete!"
 
 ## ==========
 ## == main ==
