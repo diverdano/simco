@@ -20,9 +20,9 @@ This version attempts to adhere to a MVC design pattern separating the data mode
 
 ### How do I get set up? ###
 1. clone repository on deployment environment
-2. create sqlite database with sql script: sqlite3 -init create\_db.sql simco.db
-3. run webserver with port and debug options as desired: python project.py --start --port=8000 --debug
-4. point browser to ip address and port, base url "/" will redirect to assets page, navigation links allow testing of all functionality
+2. create sqlite database with sql script: `sqlite3 -init create_db.sql simco.db`
+3. run webserver with port and debug options as desired: `python project.py --start --port=8000 --debug`
+4. point browser to ip address and port (e.g.: `http://localhost:8000/`), base url "/" will redirect to assets page, navigation links allow testing of all functionality
 
 # Setup
 for this project I am using:
