@@ -1,0 +1,4 @@
+2017-12-07 08:58:21,362 simco_app INFO     project.py-><module> line 50: set logger for app simco_app - debug level as True using logfile: log/web.log
+2017-12-07 08:58:21,380 simco_app INFO     project.py-><module> line 59: assets loaded: 8
+2017-12-07 08:58:21,381 simco_app INFO     project.py-><module> line 61: allocations loaded: 15
+2017-12-07 08:58:21,398 werkzeug INFO     _internal.py->_log line 87:  * Running on http://localhost:8000/ (Press CTRL+C to quit)
